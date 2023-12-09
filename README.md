@@ -1,3 +1,6 @@
+Jenbeta.py requires you to put in your own API keys for chatgpt in order for it to work.
+
+
 ```markdown
                                   ______________
                            ,===:'.,            `-._
