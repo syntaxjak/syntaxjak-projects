@@ -8,7 +8,7 @@ chat_history = []
 while True:
     # Wait for user input
     prompt = input("Enter your prompt (or 'quit' to exit): ")
-
+    print("\n" * 3)
     if prompt.lower() == 'quit':
         break  # Exit the loop if the user enters 'quit'
 
@@ -27,7 +27,7 @@ while True:
     response = client.chat.completions.create(
         model="gpt-4-1106-preview",
         messages=payload["messages"],
-        max_tokens=250,
+        max_tokens=4000,
     )
 
     # Get the bot's reply from the response
