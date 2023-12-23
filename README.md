@@ -1,8 +1,8 @@
 
 ```markdown
-jenbeta & jenvoice prerequisite:
-  -Jenbeta.py and jenvoice.py requires you to put in your own API keys for chatgpt in order for it to work.
-  -You must have the openai pythong package (pip install openai) 
+jenbeta/jenvoice/saywhatitype.py prerequisite:
+  -Put in your own openai API keys.
+  -You must have the openai python package (pip install openai) 
 ```
 
 
