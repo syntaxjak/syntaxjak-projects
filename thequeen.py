@@ -46,7 +46,7 @@ class Organism:
         elif interaction_type == 'move':
             # Move interaction: Rename the directory to represent moving to a new location.
             new_name = f"{self.name}_{random.randint(1, 100)}"
-            new_path = os.path.join('/home/killswitch/Documents/organisms/host', new_name)
+            new_path = os.path.join('/home/killswitch/Documents/organisms/hive', new_name)
             os.rename(self.path, new_path)
             self.name = new_name
             self.path = new_path
