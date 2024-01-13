@@ -1,5 +1,6 @@
 import keyring
 import random
+import json
 
 
 # List of preprogrammed responses
@@ -13,11 +14,29 @@ responses = [
 # Randomly select a response
 response = random.choice(responses)
 
+def save_key(service, name):
+    keys_file = 'keys.json'
+    
+    # Try to load existing keys
+    try:
+        with open(keys_file, 'r') as file:
+            keys = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        keys = []
+    
+    # Add the new key info
+    keys.append({'service': service, 'name': name})
+    
+    # Write the updated keys list to the file
+    with open(keys_file, 'w') as file:
+        json.dump(keys, file)
+
 def add_key():
     service = input("Enter service: ")
     name = input("Enter name: ")
     key = input("Enter key: ")
     keyring.set_password(service, name, key)
+    save_key(service, name)
     print("Your key has been saved!")
 
 def remove_key():
@@ -30,13 +49,23 @@ def remove_key():
         print("The specified key was not found!")
 
 def list_keys():
-    print("Your key-ring:")
-    # ... replace all occurences of yourkeyname with your keys name and yourservice with your services name...
+    keys_file = 'keys.json'
     
-    #yourkeyname = keyring.get_password("yourservice", "yourkeyname")
-    #print("\tyourkeynames:" , yourkeyname)
-
-
+    # Try to load and display keys
+    try:
+        with open(keys_file, 'r') as file:
+            keys = json.load(file)
+            for key_info in keys:
+                service = key_info['service']
+                name = key_info['name']
+                
+                # Retrieve and display the key for each stored service-name pair
+                key = keyring.get_password(service, name)
+                print(f"\t{service}/{name}: {key if key else 'Key not found'}")
+                
+    except (FileNotFoundError, json.JSONDecodeError):
+        print("No keys found.")
+        
 while True:
     print(f'\nThe Keyring Warden greets you: "{response}"')
     print("1. Add a new key")
