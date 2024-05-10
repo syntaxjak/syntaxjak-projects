@@ -1,12 +1,24 @@
+
 from openai import OpenAI
 import json
 import os
 
 from colorama import Fore, Style, init
 
-# Initialize the OpenAI client with your API key
-#api_key = 'your-api-key-herer'
-api_key = os.environ.get('JENKEY')
+def get_api_key():
+    api_key_file = 'api_key.json'
+    
+    if os.path.exists(api_key_file):
+        with open(api_key_file, 'r') as file:
+            data = json.load(file)
+            return data['api_key']
+    else:
+        api_key = input("Enter your API key: ")
+        with open(api_key_file, 'w') as file:
+            json.dump({'api_key': api_key}, file)
+        return api_key
+
+api_key = get_api_key()
 client = OpenAI(api_key=api_key)
 
 # ANSI escape codes
@@ -33,7 +45,7 @@ def find_relevant_sentences(stored_messages, current_prompt):
     return unique_relevant_sentences
 
 while True:
-    print("\033[32mContext: ", end="")
+    print("\033[32mHandle: ", end="")
     user_name = input("\033[0m")
 
     if user_name.lower() == 'q':
